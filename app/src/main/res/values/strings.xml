@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Natural Date and Time</string>
+    <string name="action_examples">Examples</string>
+    <string name="action_about">About</string>
+</resources>
