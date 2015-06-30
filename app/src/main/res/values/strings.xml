@@ -2,4 +2,7 @@
     <string name="app_name">Natural Date and Time</string>
     <string name="action_examples">Examples</string>
     <string name="action_about">About</string>
+    <string name="generic_error_message">Oops. Something went wrong. Please try again.</string>
+    <string name="no_internet_error_message">Oops. No connection available. Please check your internet connection.</string>
+    <string name="did_not_understand_question">Im sorry I could not understand your question. Please try and rephrase your question or go to the examples screen to see what questions I do understand.</string>
 </resources>

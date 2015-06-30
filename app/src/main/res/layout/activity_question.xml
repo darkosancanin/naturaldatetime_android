@@ -12,16 +12,27 @@
         android:layout_width="match_parent"
         android:inputType="textMultiLine"
         android:layout_height="wrap_content"
+        android:hint="What is the time in New York when it is 2pm in Sydney?"
         android:ems="10"
         android:id="@+id/question_text"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView3"
+        android:text="Answer"
+        android:id="@+id/question_answer"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Note"
+        android:id="@+id/question_note"
         android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal" />
 
