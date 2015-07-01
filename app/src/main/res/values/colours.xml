@@ -3,7 +3,7 @@
     <color name="background">#F4F4F4</color>
     <color name="transparent_grey">#a7a7a7</color>
     <color name="text_color">#666</color>
-    <color name="question_edittext_border">#545454</color>
+    <color name="question_edittext_border">#878484</color>
     <color name="example_question_edittext_color">#a7a7a7</color>
     <color name="note_background">#fbec88</color>
     <color name="note_border">#fad42e</color>

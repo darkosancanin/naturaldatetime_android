@@ -29,7 +29,7 @@
                 android:id="@+id/loading_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dip"
+                android:layout_marginTop="20dip"
                 android:visibility="gone"
                 android:layout_gravity="center">
 
@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
                 android:typeface="serif"
+                android:layout_marginTop="20dip"
                 android:textSize="18dp"
                 />
 
@@ -74,7 +75,6 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/info"
                         android:paddingRight="10dip"
-                        android:contentDescription="@string/app_name"
                         android:layout_gravity="center_vertical"
                         />
 
