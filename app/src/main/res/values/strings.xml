@@ -1,8 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Natural Date and Time</string>
-    <string name="action_examples">Examples</string>
-    <string name="action_about">About</string>
-    <string name="generic_error_message">Oops. Something went wrong. Please try again.</string>
+	<string name="app_name">Natural Date and Time</string>
+	<string name="action_examples">Examples</string>
+	<string name="action_about">About</string>
+    <string name="example_questions">example questions >></string>
+    <string name="loading">Loading</string> 
+    <string name="about_title">About</string> 
+    <string name="examples_title">Examples</string> 
+	<string name="actionbar_activity_not_found">Failed to open intent.</string>
+	<string name="about_text">Natural Date and Time is a natural language date and time zone engine powered by naturaldateandtime.com which allows you to view time and date information for any major city in the world by querying in natural english.</string>
+	<string name="email_button_text">naturaldatetime@idarko.com</string>
+	<string name="www_button_text">naturaldateandtime.com</string>
+	<string name="twitter_button_text">naturaldatetime</string>
+	<string name="powered_by">powered by naturaldateandtime.com</string>
+    <string name="copyright_version">Copyright \u00A9 2012 Darko Sancanin\nVersion 1.1</string>
+	<string name="generic_error_message">Oops. Something went wrong. Please try again.</string>
+    <string name="speak_now">Speak now</string>
     <string name="no_internet_error_message">Oops. No connection available. Please check your internet connection.</string>
-    <string name="did_not_understand_question">Im sorry I could not understand your question. Please try and rephrase your question or go to the examples screen to see what questions I do understand.</string>
+	<string name="did_not_understand_question">Im sorry I could not understand your question. Please try and rephrase your question or tap on the examples button above to see what questions I do understand.</string>
+	
+	<string name="example_section_heading_1">Current time in a city</string>
+	<string name="example_section_1_example_1">What is the time in New York</string>
+	<string name="example_section_1_example_2">Time in Belgrade</string>
+	
+	<string name="example_section_heading_2">Time conversions between cities in different timezones</string>
+	<string name="example_section_2_example_1">What is the time in Kathmandu, Nepal when it is 7pm in New York, USA</string>
+	<string name="example_section_2_example_2">If its 4pm in London what is the time in Boston</string>
+	
+	<string name="example_section_heading_3">Time conversions between cities in different timezones on a particular date</string>
+	<string name="example_section_3_example_1">What is the time in Sao Paolo when it is 6pm on the 2nd of June in Detroit</string>
+	<string name="example_section_3_example_2">What time is it in Paris when it is 7-April-2013 in Sydney at 2am</string>
+	
+	<string name="example_section_heading_4">Daylight saving information for a city</string>
+	<string name="example_section_4_example_1">When does daylight saving time begin in Auckland</string>
+	
+	<string name="example_section_heading_5">Daylight saving information for a city for a specific year</string>
+	<string name="example_section_5_example_1">When does daylight saving time begin in New York in 2013</string>
 </resources>

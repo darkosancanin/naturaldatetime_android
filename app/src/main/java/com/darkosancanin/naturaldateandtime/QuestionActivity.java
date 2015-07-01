@@ -1,18 +1,26 @@
 package com.darkosancanin.naturaldateandtime;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.darkosancanin.naturaldateandtime.models.Answer;
+import com.darkosancanin.naturaldateandtime.models.ExampleQuestionGenerator;
+import com.darkosancanin.naturaldateandtime.views.ClearableEditText;
+import com.darkosancanin.naturaldateandtime.views.OnClearHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,24 +32,50 @@ import java.net.URLEncoder;
 
 
 public class QuestionActivity extends BaseActivity {
-    EditText questionEditText;
+    public final static String QUESTION_EXTRA_NAME = "QUESTION_EXTRA_NAME";
+    private static final int EXAMPLES_REQUEST_CODE = 5678;
+    ExampleQuestionGenerator exampleQuestionGenerator;
+    ClearableEditText questionClearableText;
     TextView answerTextView;
+    LinearLayout noteView;
     TextView noteTextView;
+    LinearLayout loadingView;
+    ImageView loadingImageView;
+    AnimationDrawable loadingAnimation;
     Boolean hasCancelledTheRequest = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        questionEditText = (EditText) findViewById(R.id.question_text);
+        exampleQuestionGenerator = new ExampleQuestionGenerator(this);
+        questionClearableText = (ClearableEditText) findViewById(R.id.question_edittext);
         answerTextView = (TextView) findViewById(R.id.question_answer);
         noteTextView = (TextView) findViewById(R.id.question_note);
+        noteView = (LinearLayout)findViewById(R.id.note_view);
+        loadingView = (LinearLayout)findViewById(R.id.loading_view);
+        loadingImageView = (ImageView)findViewById(R.id.loading_imageview);
+        loadingImageView.setBackgroundResource(R.drawable.loading_animation);
+        loadingAnimation = (AnimationDrawable) loadingImageView.getBackground();
         setupViewEventHandlers();
     }
 
     private void setupViewEventHandlers() {
-        questionEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
+        questionClearableText.getEditText().addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (start == 0 && before == 0 && count == 0) return;
+                hideAll();
+                questionClearableText.getEditText().setHint("");
+                questionClearableText.getEditText().setTextColor(getResources().getColor(android.R.color.black));
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+        });
+        questionClearableText.getEditText().setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     if (event.getAction() == KeyEvent.ACTION_UP) {
@@ -52,21 +86,37 @@ public class QuestionActivity extends BaseActivity {
                 return false;
             }
         });
+        questionClearableText.setOnClearHandler(new OnClearHandler() {
+            public void onClear() {
+                hideAll();
+                showRandomExampleQuestion();
+                hasCancelledTheRequest = true;
+            }
+        });
+        showRandomExampleQuestion();
+    }
+
+    private void showRandomExampleQuestion(){
+        questionClearableText.getEditText().setHint(exampleQuestionGenerator.getRandomExampleQuestion());
+        questionClearableText.getEditText().setTextColor(getResources().getColor(R.color.example_question_edittext_color));
     }
 
     private void answerTheQuestion() {
         hideKeyboard();
-        if(questionEditText.getText().length() == 0) return;
+        if(questionClearableText.getEditText().getText().length() == 0) return;
         showLoadingView();
         new AnswerQuestionTask().execute();
     }
 
     private void showLoadingView() {
-
+        hideAll();
+        loadingView.setVisibility(LinearLayout.VISIBLE);
+        loadingAnimation.start();
     }
 
     private void hideKeyboard() {
-
+        InputMethodManager imm = (InputMethodManager) answerTextView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(answerTextView.getWindowToken(), 0);
     }
 
     private void showAnswer(Answer answer) {
@@ -76,18 +126,19 @@ public class QuestionActivity extends BaseActivity {
         if(answer.understoodQuestion()){
             answerTextView.setText(answer.getAnswerText());
             if(answer.hasNote()){
-                noteTextView.setVisibility(LinearLayout.VISIBLE);
+                noteView.setVisibility(LinearLayout.VISIBLE);
                 noteTextView.setText(answer.getNote());
             }
-        }
-        else{
+        } else {
             answerTextView.setText(R.string.did_not_understand_question);
         }
     }
 
     private void hideAll(){
         answerTextView.setVisibility(LinearLayout.GONE);
-        noteTextView.setVisibility(LinearLayout.GONE);
+        noteView.setVisibility(LinearLayout.GONE);
+        loadingView.setVisibility(LinearLayout.GONE);
+        loadingAnimation.stop();
     }
 
     private void showError(int errorTextResId) {
@@ -111,7 +162,7 @@ public class QuestionActivity extends BaseActivity {
 
             StringBuffer jsonContent = new StringBuffer("");
             try{
-                URL url = new URL("http://www.naturaldateandtime.com/api/question?q=" + URLEncoder.encode(questionEditText.getText().toString(), "UTF-8"));
+                URL url = new URL("http://www.naturaldateandtime.com/api/question?q=" + URLEncoder.encode(questionClearableText.getEditText().getText().toString(), "UTF-8"));
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
@@ -145,5 +196,18 @@ public class QuestionActivity extends BaseActivity {
                     showError(errorTextResId);
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == EXAMPLES_REQUEST_CODE && resultCode == RESULT_OK) {
+            String question = data.getStringExtra(QUESTION_EXTRA_NAME);
+            if(question != null && question.length() > 0){
+                questionClearableText.getEditText().setText(question);
+                answerTheQuestion();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
