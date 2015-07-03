@@ -2,17 +2,21 @@ package com.darkosancanin.naturaldateandtime;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,11 +33,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class QuestionActivity extends BaseActivity {
     public final static String QUESTION_EXTRA_NAME = "QUESTION_EXTRA_NAME";
-    private static final int EXAMPLES_REQUEST_CODE = 5678;
+    private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     ExampleQuestionGenerator exampleQuestionGenerator;
     ClearableEditText questionClearableText;
     TextView answerTextView;
@@ -42,6 +48,7 @@ public class QuestionActivity extends BaseActivity {
     LinearLayout loadingView;
     ImageView loadingImageView;
     AnimationDrawable loadingAnimation;
+    ImageButton speechButton;
     Boolean hasCancelledTheRequest = false;
 
     @Override
@@ -57,7 +64,7 @@ public class QuestionActivity extends BaseActivity {
         loadingImageView = (ImageView)findViewById(R.id.loading_imageview);
         loadingImageView.setBackgroundResource(R.drawable.loading_animation);
         loadingAnimation = (AnimationDrawable) loadingImageView.getBackground();
-        setupViewEventHandlers();
+        setupViews();
         checkIfQuestionIsPassedAsExtra();
     }
 
@@ -72,7 +79,7 @@ public class QuestionActivity extends BaseActivity {
         }
     }
 
-    private void setupViewEventHandlers() {
+    private void setupViews() {
         questionClearableText.getEditText().addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (start == 0 && before == 0 && count == 0) return;
@@ -103,9 +110,52 @@ public class QuestionActivity extends BaseActivity {
                 hideAll();
                 showRandomExampleQuestion();
                 hasCancelledTheRequest = true;
+                if(speechButton.isEnabled()){
+                    speechButton.setVisibility(ImageButton.VISIBLE);
+                }
             }
         });
+        setUpSpeechButton();
         showRandomExampleQuestion();
+    }
+
+    private void setUpSpeechButton(){
+        speechButton = (ImageButton)findViewById(R.id.speech_button);
+        speechButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startVoiceRecognitionActivity();
+            }
+        });
+        PackageManager pm = getPackageManager();
+        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        if (activities.size() == 0)
+        {
+            speechButton.setEnabled(false);
+            speechButton.setVisibility(ImageButton.GONE);
+        }
+    }
+
+    private void startVoiceRecognitionActivity() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getResources().getString(R.string.speak_now));
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,1);
+        startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == VOICE_RECOGNITION_REQUEST_CODE && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                String spokenText = matches.get(0);
+                questionClearableText.getEditText().setText(spokenText);
+                answerTheQuestion();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showRandomExampleQuestion(){
@@ -147,6 +197,7 @@ public class QuestionActivity extends BaseActivity {
     }
 
     private void hideAll(){
+        speechButton.setVisibility(ImageButton.GONE);
         answerTextView.setVisibility(LinearLayout.GONE);
         noteView.setVisibility(LinearLayout.GONE);
         loadingView.setVisibility(LinearLayout.GONE);

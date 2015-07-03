@@ -19,12 +19,12 @@
         </activity>
         <activity
             android:name=".ExamplesActivity"
-            android:label="@string/action_examples"
+            android:label="@string/examples"
             android:theme="@style/SmallLogoAppTheme">
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/action_about"
+            android:label="@string/about"
             android:theme="@style/SmallLogoAppTheme">
         </activity>
     </application>

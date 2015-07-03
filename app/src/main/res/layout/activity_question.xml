@@ -25,6 +25,16 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
 
+            <ImageButton
+                android:id="@+id/speech_button"
+                android:layout_width="64dip"
+                android:layout_height="64dip"
+                android:src="@drawable/speech"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="20dip"
+                android:layout_gravity="center"
+                />
+
             <LinearLayout
                 android:id="@+id/loading_view"
                 android:layout_width="wrap_content"
