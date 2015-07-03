@@ -29,7 +29,7 @@ public class AboutActivity extends BaseActivity {
         emailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"naturaldatetime@idarko.com"});
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"darko@darkosancanin.com"});
                 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
             }
         });
