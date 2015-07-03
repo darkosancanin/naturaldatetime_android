@@ -13,8 +13,7 @@ public class ExamplesActivity extends BaseActivity {
             String question = button.getText().toString();
             Intent questionIntent = new Intent(v.getContext(), QuestionActivity.class);
             questionIntent.putExtra(QuestionActivity.QUESTION_EXTRA_NAME, question);
-            setResult(RESULT_OK, questionIntent);
-            finish();
+            startActivity(questionIntent);
         }
     };
 

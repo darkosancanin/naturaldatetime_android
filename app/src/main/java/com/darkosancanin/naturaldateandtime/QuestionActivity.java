@@ -58,6 +58,18 @@ public class QuestionActivity extends BaseActivity {
         loadingImageView.setBackgroundResource(R.drawable.loading_animation);
         loadingAnimation = (AnimationDrawable) loadingImageView.getBackground();
         setupViewEventHandlers();
+        checkIfQuestionIsPassedAsExtra();
+    }
+
+    private void checkIfQuestionIsPassedAsExtra() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("QUESTION_EXTRA_NAME")) {
+                String question = extras.getString("QUESTION_EXTRA_NAME");
+                questionClearableText.getEditText().setText(question);
+                answerTheQuestion();
+            }
+        }
     }
 
     private void setupViewEventHandlers() {
@@ -196,18 +208,5 @@ public class QuestionActivity extends BaseActivity {
                     showError(errorTextResId);
             }
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == EXAMPLES_REQUEST_CODE && resultCode == RESULT_OK) {
-            String question = data.getStringExtra(QUESTION_EXTRA_NAME);
-            if(question != null && question.length() > 0){
-                questionClearableText.getEditText().setText(question);
-                answerTheQuestion();
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 }
