@@ -160,7 +160,7 @@ public class QuestionActivity extends BaseActivity {
 
     private void showRandomExampleQuestion(){
         questionClearableText.getEditText().setHint(exampleQuestionGenerator.getRandomExampleQuestion());
-        questionClearableText.getEditText().setTextColor(getResources().getColor(R.color.example_question_edittext_color));
+        questionClearableText.getEditText().setTextColor(getResources().getColor(R.color.clearable_edit_text_hint_color));
     }
 
     private void answerTheQuestion() {

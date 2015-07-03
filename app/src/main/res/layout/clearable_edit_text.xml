@@ -16,9 +16,9 @@
         android:paddingBottom="10dip"
         android:paddingRight="37dip"
         android:textSize="18dip"
-        android:background="@drawable/question_border"
+        android:background="@drawable/clearable_edit_text_border"
         android:gravity="top"
-        android:textColorHint="@color/example_question_edittext_color"
+        android:textColorHint="@color/clearable_edit_text_hint_color"
         android:typeface="serif"
         />
     <Button
