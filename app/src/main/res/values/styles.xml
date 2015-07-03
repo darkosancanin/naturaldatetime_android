@@ -14,6 +14,19 @@
         <item name="android:displayOptions">useLogo|showHome</item>
     </style>
 
+    <style name="SmallLogoAppTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/SmallLogoActionBar</item>
+    </style>
+
+    <style name="SmallLogoActionBar" parent="android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/actionbar_height</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@drawable/actionbar_background</item>
+        <item name="android:icon">@drawable/logo</item>
+        <item name="android:displayOptions">useLogo|showHome|showTitle</item>
+    </style>
+
     <style name="ExampleSectionHeading">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

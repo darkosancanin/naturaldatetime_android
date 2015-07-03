@@ -9,11 +9,10 @@
     <string name="examples_title">Examples</string> 
 	<string name="actionbar_activity_not_found">Failed to open intent.</string>
 	<string name="about_text">Natural Date and Time is a natural language date and time zone engine powered by naturaldateandtime.com which allows you to view time and date information for any major city in the world by querying in natural english.</string>
-	<string name="email_button_text">naturaldatetime@idarko.com</string>
-	<string name="www_button_text">naturaldateandtime.com</string>
-	<string name="twitter_button_text">naturaldatetime</string>
+	<string name="email_button_text">darko@darkosancanin.com</string>
+	<string name="www_button_text">www.naturaldateandtime.com</string>
 	<string name="powered_by">powered by www.naturaldateandtime.com</string>
-    <string name="copyright_version">Copyright \u00A9 2012 Darko Sancanin\nVersion 1.1</string>
+    <string name="copyright_version">Copyright \u00A9 2015 Darko Sancanin\nVersion 2.0</string>
 	<string name="generic_error_message">Oops. Something went wrong. Please try again.</string>
     <string name="speak_now">Speak now</string>
     <string name="no_internet_error_message">Oops. No connection available. Please check your internet connection.</string>

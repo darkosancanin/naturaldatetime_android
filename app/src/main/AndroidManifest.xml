@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".QuestionActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,11 +19,13 @@
         </activity>
         <activity
             android:name=".ExamplesActivity"
-            android:label="@string/app_name" >
+            android:label="@string/action_examples"
+            android:theme="@style/SmallLogoAppTheme">
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/app_name" >
+            android:label="@string/action_about"
+            android:theme="@style/SmallLogoAppTheme">
         </activity>
     </application>
 
