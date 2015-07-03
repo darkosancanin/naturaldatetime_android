@@ -16,7 +16,7 @@ public class Answer {
             JSONObject jsonObject = new JSONObject(jsonString);
             answerText = jsonObject.getString("AnswerText");
             setNote(jsonObject.getString("Note"));
-            //understoodQuestion = jsonObject.getBoolean("UnderstoodQuestion");
+            understoodQuestion = jsonObject.getBoolean("UnderstoodQuestion");
         } catch (JSONException e) {
             isValidAnswerResult = false;
             Log.v("Answer", e.getLocalizedMessage());
@@ -41,7 +41,7 @@ public class Answer {
     }
 
     public Boolean understoodQuestion() {
-        return true;
+        return understoodQuestion;
     }
 
     public Boolean isValidAnswerResult() {

@@ -162,7 +162,7 @@ public class QuestionActivity extends BaseActivity {
 
             StringBuffer jsonContent = new StringBuffer("");
             try{
-                URL url = new URL("http://www.naturaldateandtime.com/api/question?q=" + URLEncoder.encode(questionClearableText.getEditText().getText().toString(), "UTF-8"));
+                URL url = new URL("http://www.naturaldateandtime.com/api/question?client=android&client_version=2_0&q=" + URLEncoder.encode(questionClearableText.getEditText().getText().toString(), "UTF-8"));
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
