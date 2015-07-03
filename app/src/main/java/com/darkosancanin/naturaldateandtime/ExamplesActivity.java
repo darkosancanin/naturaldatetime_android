@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.TextView;
 
 public class ExamplesActivity extends BaseActivity {
     private OnClickListener onExampleClick = new OnClickListener() {
         public void onClick(View v) {
-            Button button = (Button)v;
+            TextView button = (TextView)v;
             String question = button.getText().toString();
             Intent questionIntent = new Intent(v.getContext(), QuestionActivity.class);
             questionIntent.putExtra(QuestionActivity.QUESTION_EXTRA_NAME, question);
@@ -35,7 +35,7 @@ public class ExamplesActivity extends BaseActivity {
     }
 
     private void wireUpClickEvent(int textViewId){
-        Button button = (Button)findViewById(textViewId);
+        TextView button = (TextView)findViewById(textViewId);
         button.setOnClickListener(onExampleClick);
     }
 }
