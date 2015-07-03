@@ -52,6 +52,18 @@ public class QuestionActivity extends BaseActivity {
     Boolean hasCancelledTheRequest = false;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getExtras() != null) {
+            if (intent.getExtras().containsKey("QUESTION_EXTRA_NAME")) {
+                String question = intent.getExtras().getString("QUESTION_EXTRA_NAME");
+                questionClearableText.getEditText().setText(question);
+                answerTheQuestion();
+            }
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
@@ -65,18 +77,6 @@ public class QuestionActivity extends BaseActivity {
         loadingImageView.setBackgroundResource(R.drawable.loading_animation);
         loadingAnimation = (AnimationDrawable) loadingImageView.getBackground();
         setupViews();
-        checkIfQuestionIsPassedAsExtra();
-    }
-
-    private void checkIfQuestionIsPassedAsExtra() {
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            if (extras.containsKey("QUESTION_EXTRA_NAME")) {
-                String question = extras.getString("QUESTION_EXTRA_NAME");
-                questionClearableText.getEditText().setText(question);
-                answerTheQuestion();
-            }
-        }
     }
 
     private void setupViews() {
