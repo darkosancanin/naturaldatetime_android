@@ -20,7 +20,7 @@
             android:padding="12dip"
             >
 
-            <com.darkosancanin.naturaldateandtime.views.ClearableEditText
+            <com.darkosancanin.naturaldateandtime.views.ClearableEditTextLayout
                 android:id="@+id/question_edittext"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />

@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.darkosancanin.naturaldateandtime.models.Answer;
 import com.darkosancanin.naturaldateandtime.models.ExampleQuestionGenerator;
-import com.darkosancanin.naturaldateandtime.views.ClearableEditText;
+import com.darkosancanin.naturaldateandtime.views.ClearableEditTextLayout;
 import com.darkosancanin.naturaldateandtime.views.OnClearHandler;
 
 import java.io.BufferedReader;
@@ -41,7 +41,7 @@ public class QuestionActivity extends BaseActivity {
     public final static String QUESTION_EXTRA_NAME = "QUESTION_EXTRA_NAME";
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     ExampleQuestionGenerator exampleQuestionGenerator;
-    ClearableEditText questionClearableText;
+    ClearableEditTextLayout clearableEditTextLayout;
     TextView answerTextView;
     LinearLayout noteView;
     TextView noteTextView;
@@ -57,7 +57,7 @@ public class QuestionActivity extends BaseActivity {
         if (intent.getExtras() != null) {
             if (intent.getExtras().containsKey("QUESTION_EXTRA_NAME")) {
                 String question = intent.getExtras().getString("QUESTION_EXTRA_NAME");
-                questionClearableText.getEditText().setText(question);
+                clearableEditTextLayout.getEditText().setText(question);
                 answerTheQuestion();
             }
         }
@@ -68,7 +68,7 @@ public class QuestionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         exampleQuestionGenerator = new ExampleQuestionGenerator(this);
-        questionClearableText = (ClearableEditText) findViewById(R.id.question_edittext);
+        clearableEditTextLayout = (ClearableEditTextLayout) findViewById(R.id.question_edittext);
         answerTextView = (TextView) findViewById(R.id.question_answer);
         noteTextView = (TextView) findViewById(R.id.question_note);
         noteView = (LinearLayout)findViewById(R.id.note_view);
@@ -80,12 +80,12 @@ public class QuestionActivity extends BaseActivity {
     }
 
     private void setupViews() {
-        questionClearableText.getEditText().addTextChangedListener(new TextWatcher() {
+        clearableEditTextLayout.getEditText().addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (start == 0 && before == 0 && count == 0) return;
                 hideAll();
-                questionClearableText.getEditText().setHint("");
-                questionClearableText.getEditText().setTextColor(getResources().getColor(android.R.color.black));
+                clearableEditTextLayout.getEditText().setHint("");
+                clearableEditTextLayout.getEditText().setTextColor(getResources().getColor(android.R.color.black));
             }
 
             public void afterTextChanged(Editable s) {
@@ -94,7 +94,7 @@ public class QuestionActivity extends BaseActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
         });
-        questionClearableText.getEditText().setOnKeyListener(new View.OnKeyListener() {
+        clearableEditTextLayout.getEditText().setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     if (event.getAction() == KeyEvent.ACTION_UP) {
@@ -105,12 +105,12 @@ public class QuestionActivity extends BaseActivity {
                 return false;
             }
         });
-        questionClearableText.setOnClearHandler(new OnClearHandler() {
+        clearableEditTextLayout.setOnClearHandler(new OnClearHandler() {
             public void onClear() {
                 hideAll();
                 showRandomExampleQuestion();
                 hasCancelledTheRequest = true;
-                if(speechButton.isEnabled()){
+                if (speechButton.isEnabled()) {
                     speechButton.setVisibility(ImageButton.VISIBLE);
                 }
             }
@@ -151,7 +151,7 @@ public class QuestionActivity extends BaseActivity {
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             if (matches != null && matches.size() > 0) {
                 String spokenText = matches.get(0);
-                questionClearableText.getEditText().setText(spokenText);
+                clearableEditTextLayout.getEditText().setText(spokenText);
                 answerTheQuestion();
             }
         }
@@ -159,13 +159,13 @@ public class QuestionActivity extends BaseActivity {
     }
 
     private void showRandomExampleQuestion(){
-        questionClearableText.getEditText().setHint(exampleQuestionGenerator.getRandomExampleQuestion());
-        questionClearableText.getEditText().setTextColor(getResources().getColor(R.color.clearable_edit_text_hint_color));
+        clearableEditTextLayout.getEditText().setHint(exampleQuestionGenerator.getRandomExampleQuestion());
+        clearableEditTextLayout.getEditText().setTextColor(getResources().getColor(R.color.clearable_edit_text_hint_color));
     }
 
     private void answerTheQuestion() {
         hideKeyboard();
-        if(questionClearableText.getEditText().getText().length() == 0) return;
+        if(clearableEditTextLayout.getEditText().getText().length() == 0) return;
         showLoadingView();
         new AnswerQuestionTask().execute();
     }
@@ -225,7 +225,7 @@ public class QuestionActivity extends BaseActivity {
 
             StringBuffer jsonContent = new StringBuffer("");
             try{
-                URL url = new URL("http://www.naturaldateandtime.com/api/question?client=android&client_version=2_0&q=" + URLEncoder.encode(questionClearableText.getEditText().getText().toString(), "UTF-8"));
+                URL url = new URL("http://www.naturaldateandtime.com/api/question?client=android&client_version=2_0&q=" + URLEncoder.encode(clearableEditTextLayout.getEditText().getText().toString(), "UTF-8"));
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);

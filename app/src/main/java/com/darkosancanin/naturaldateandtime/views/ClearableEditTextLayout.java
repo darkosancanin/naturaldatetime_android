@@ -10,14 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-public class ClearableEditText extends RelativeLayout
+public class ClearableEditTextLayout extends RelativeLayout
 {
     private LayoutInflater inflater = null;
     private EditText edit_text;
     private Button btn_clear;
     private OnClearHandler onClearHandler = null;
 
-    public ClearableEditText(Context context, AttributeSet attrs)
+    public ClearableEditTextLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
 
@@ -28,7 +28,7 @@ public class ClearableEditText extends RelativeLayout
         wireUpClearTextButton();
     }
 
-    public ClearableEditText(Context context)
+    public ClearableEditTextLayout(Context context)
     {
         super(context);
     }
