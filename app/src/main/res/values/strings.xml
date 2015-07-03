@@ -12,7 +12,7 @@
 	<string name="email_button_text">naturaldatetime@idarko.com</string>
 	<string name="www_button_text">naturaldateandtime.com</string>
 	<string name="twitter_button_text">naturaldatetime</string>
-	<string name="powered_by">powered by naturaldateandtime.com</string>
+	<string name="powered_by">powered by www.naturaldateandtime.com</string>
     <string name="copyright_version">Copyright \u00A9 2012 Darko Sancanin\nVersion 1.1</string>
 	<string name="generic_error_message">Oops. Something went wrong. Please try again.</string>
     <string name="speak_now">Speak now</string>
