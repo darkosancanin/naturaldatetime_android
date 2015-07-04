@@ -7,6 +7,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -99,7 +101,7 @@ public class QuestionActivity extends BaseActivity {
         clearableEditTextLayout.getEditText().setFilters(new InputFilter[]{filter});
         clearableEditTextLayout.getEditText().addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(textHasChangedSinceAnswer == false){
+                if (textHasChangedSinceAnswer == false) {
                     hideAll();
                     clearableEditTextLayout.getEditText().setHint("");
                     clearableEditTextLayout.getEditText().setTextColor(getResources().getColor(android.R.color.black));
@@ -107,8 +109,11 @@ public class QuestionActivity extends BaseActivity {
                 textHasChangedSinceAnswer = true;
             }
 
-            public void afterTextChanged(Editable s) {}
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
         });
         clearableEditTextLayout.getEditText().setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -127,6 +132,13 @@ public class QuestionActivity extends BaseActivity {
                 if (speechButton.isEnabled()) {
                     speechButton.setVisibility(ImageButton.VISIBLE);
                 }
+            }
+        });
+        TextView footer = (TextView) findViewById(R.id.footer);
+        footer.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.naturaldateandtime.com"));
+                startActivity(browserIntent);
             }
         });
         setUpSpeechButton();
@@ -238,7 +250,7 @@ public class QuestionActivity extends BaseActivity {
                 return null;
             }
 
-            StringBuffer jsonContent = new StringBuffer("");
+            StringBuffer jsonContentBuffer = new StringBuffer("");
             try{
                 URL url = new URL("http://www.naturaldateandtime.com/api/question?client=android&client_version=2_0&q=" + URLEncoder.encode(clearableEditTextLayout.getEditText().getText().toString(), "UTF-8"));
                 HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -250,9 +262,9 @@ public class QuestionActivity extends BaseActivity {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line = "";
                     while ((line = bufferedReader.readLine()) != null) {
-                        jsonContent.append(line);
+                        jsonContentBuffer.append(line);
                     }
-                    return jsonContent.toString();
+                    return jsonContentBuffer.toString();
                 }
             } catch (IOException e) {
                 Log.v("Question", e.getLocalizedMessage());
