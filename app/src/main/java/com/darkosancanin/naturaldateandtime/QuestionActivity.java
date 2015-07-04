@@ -11,6 +11,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -80,6 +82,20 @@ public class QuestionActivity extends BaseActivity {
     }
 
     private void setupViews() {
+        InputFilter filter = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+                if(end > 0) {
+                    char lastCharacter = source.charAt(end - 1);
+                    if(lastCharacter == '\n')
+                    {
+                        answerTheQuestion();
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+        clearableEditTextLayout.getEditText().setFilters(new InputFilter[]{filter});
         clearableEditTextLayout.getEditText().addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (start == 0 && before == 0 && count == 0) return;
@@ -96,10 +112,8 @@ public class QuestionActivity extends BaseActivity {
         });
         clearableEditTextLayout.getEditText().setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (event.getAction() == KeyEvent.ACTION_UP) {
-                        answerTheQuestion();
-                    }
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    answerTheQuestion();
                     return true;
                 }
                 return false;
