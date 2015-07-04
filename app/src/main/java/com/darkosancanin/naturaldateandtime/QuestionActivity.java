@@ -40,7 +40,7 @@ import java.util.List;
 
 
 public class QuestionActivity extends BaseActivity {
-    public final static String QUESTION_EXTRA_NAME = "QUESTION_EXTRA_NAME";
+    public final static String QUESTION_EXTRA_NAME = "QUESTION_EXTRA";
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1234;
     ExampleQuestionGenerator exampleQuestionGenerator;
     ClearableEditTextLayout clearableEditTextLayout;
@@ -58,8 +58,8 @@ public class QuestionActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.getExtras() != null) {
-            if (intent.getExtras().containsKey("QUESTION_EXTRA_NAME")) {
-                String question = intent.getExtras().getString("QUESTION_EXTRA_NAME");
+            if (intent.getExtras().containsKey(QUESTION_EXTRA_NAME)) {
+                String question = intent.getExtras().getString(QUESTION_EXTRA_NAME);
                 clearableEditTextLayout.getEditText().setText(question);
                 answerTheQuestion();
             }
