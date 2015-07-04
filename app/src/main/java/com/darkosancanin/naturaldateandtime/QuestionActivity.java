@@ -51,7 +51,8 @@ public class QuestionActivity extends BaseActivity {
     ImageView loadingImageView;
     AnimationDrawable loadingAnimation;
     ImageButton speechButton;
-    Boolean hasCancelledTheRequest = false;
+    boolean hasCancelledTheRequest = false;
+    boolean textHasChangedSinceAnswer = false;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -98,17 +99,16 @@ public class QuestionActivity extends BaseActivity {
         clearableEditTextLayout.getEditText().setFilters(new InputFilter[]{filter});
         clearableEditTextLayout.getEditText().addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (start == 0 && before == 0 && count == 0) return;
-                hideAll();
-                clearableEditTextLayout.getEditText().setHint("");
-                clearableEditTextLayout.getEditText().setTextColor(getResources().getColor(android.R.color.black));
+                if(textHasChangedSinceAnswer == false){
+                    hideAll();
+                    clearableEditTextLayout.getEditText().setHint("");
+                    clearableEditTextLayout.getEditText().setTextColor(getResources().getColor(android.R.color.black));
+                }
+                textHasChangedSinceAnswer = true;
             }
 
-            public void afterTextChanged(Editable s) {
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void afterTextChanged(Editable s) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
         clearableEditTextLayout.getEditText().setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -208,6 +208,7 @@ public class QuestionActivity extends BaseActivity {
         } else {
             answerTextView.setText(R.string.did_not_understand_question);
         }
+        textHasChangedSinceAnswer = false;
     }
 
     private void hideAll(){
