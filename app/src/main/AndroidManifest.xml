@@ -14,7 +14,6 @@
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -22,13 +21,15 @@
             android:name=".ExamplesActivity"
             android:label="@string/examples"
             android:theme="@style/SmallLogoAppTheme"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:parentActivityName="com.darkosancanin.naturaldateandtime.QuestionActivity">
         </activity>
         <activity
             android:name=".AboutActivity"
             android:label="@string/about"
             android:theme="@style/SmallLogoAppTheme"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:parentActivityName="com.darkosancanin.naturaldateandtime.QuestionActivity">
         </activity>
     </application>
 
