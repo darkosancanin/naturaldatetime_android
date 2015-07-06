@@ -32,5 +32,4 @@
             android:parentActivityName="com.darkosancanin.naturaldateandtime.QuestionActivity">
         </activity>
     </application>
-
 </manifest>

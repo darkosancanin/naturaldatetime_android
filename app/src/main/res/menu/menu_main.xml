@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.darkosancanin.naturaldateandtime.QuestionActivity">
     <item android:id="@+id/action_examples" android:title="@string/examples"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:orderInCategory="100" android:showAsAction="never" />
     <item android:id="@+id/action_about" android:title="@string/about"
-        android:orderInCategory="200" app:showAsAction="never" />
+        android:orderInCategory="200" android:showAsAction="never" />
 </menu>
