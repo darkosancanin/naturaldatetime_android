@@ -61,6 +61,7 @@ public class QuestionActivity extends BaseActivity {
         if (intent.getExtras() != null) {
             if (intent.getExtras().containsKey(QUESTION_EXTRA_NAME)) {
                 String question = intent.getExtras().getString(QUESTION_EXTRA_NAME);
+                clearableEditTextLayout.getEditText().setTextColor(getResources().getColor(android.R.color.black));
                 clearableEditTextLayout.getEditText().setText(question);
                 answerTheQuestion();
             }
