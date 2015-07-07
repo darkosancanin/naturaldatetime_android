@@ -33,7 +33,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -137,7 +139,7 @@ public class QuestionActivity extends BaseActivity {
         TextView footer = (TextView) findViewById(R.id.footer);
         footer.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.naturaldateandtime.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.url)));
                 startActivity(browserIntent);
             }
         });
@@ -250,25 +252,41 @@ public class QuestionActivity extends BaseActivity {
                 return null;
             }
 
+            HttpURLConnection httpURLConnection = null;
             StringBuffer jsonContentBuffer = new StringBuffer("");
             try{
-                URL url = new URL("http://www.naturaldateandtime.com/api/question?client=android&client_version=2_0&q=" + URLEncoder.encode(clearableEditTextLayout.getEditText().getText().toString(), "UTF-8"));
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-                connection.setRequestMethod("GET");
-                connection.setDoInput(true);
-                connection.connect();
-                if (connection.getResponseCode() == 200) {
-                    InputStream inputStream = connection.getInputStream();
+                URL url = new URL("http://www.naturaldateandtime.com/api/question");
+				String postParameters = "client=" + getResources().getString(R.string.client) + "&client_version=" + getResources().getString(R.string.client_version) + "&question=" + URLEncoder.encode(clearableEditTextLayout.getEditText().getText().toString(), "UTF-8");
+				httpURLConnection = (HttpURLConnection)url.openConnection();
+				httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+				httpURLConnection.setDoOutput(true);
+				httpURLConnection.setFixedLengthStreamingMode(postParameters.getBytes().length);
+                PrintWriter out = new PrintWriter(httpURLConnection.getOutputStream());
+				out.print(postParameters);
+				out.close();
+                if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String line = "";
                     while ((line = bufferedReader.readLine()) != null) {
                         jsonContentBuffer.append(line);
                     }
+					bufferedReader.close();
                     return jsonContentBuffer.toString();
                 }
-            } catch (IOException e) {
+            }
+			catch (SocketTimeoutException e) {
+				Log.v("Question", e.getLocalizedMessage());
+			} catch (IOException e) {
                 Log.v("Question", e.getLocalizedMessage());
             }
+			finally {
+				if (httpURLConnection != null) {
+					httpURLConnection.disconnect();
+				}
+			}
 
             return null;
         }

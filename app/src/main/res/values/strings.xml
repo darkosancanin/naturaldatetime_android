@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Natural Date and Time</string>
+	<string name="client">android</string>
+	<string name="client_version">2.0</string>
 	<string name="examples">Examples</string>
 	<string name="about">About</string>
-    <string name="example_questions">example questions >></string>
     <string name="loading">Loading</string>
 	<string name="about_text">Natural Date and Time is a natural language date and time zone engine powered by naturaldateandtime.com which allows you to view time and date information for any major city in the world by querying in natural english.</string>
-	<string name="email_button_text">darko@darkosancanin.com</string>
+	<string name="email_address">darko@darkosancanin.com</string>
+	<string name="url">http://www.naturaldateandtime.com</string>
 	<string name="www_button_text">www.naturaldateandtime.com</string>
 	<string name="powered_by">powered by www.naturaldateandtime.com</string>
     <string name="copyright_version">Copyright \u00A9 2015 Darko Sancanin\nVersion 2.0</string>

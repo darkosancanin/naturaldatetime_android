@@ -20,7 +20,7 @@ public class AboutActivity extends BaseActivity {
         Button wwwButton = (Button) findViewById(R.id.www_button);
         wwwButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.naturaldateandtime.com"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getResources().getString(R.string.url)));
                 startActivity(browserIntent);
             }
         });
@@ -29,7 +29,7 @@ public class AboutActivity extends BaseActivity {
         emailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"darko@darkosancanin.com"});
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{getResources().getString(R.string.email_address)});
                 startActivity(Intent.createChooser(emailIntent, "Send mail..."));
             }
         });

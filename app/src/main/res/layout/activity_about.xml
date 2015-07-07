@@ -45,7 +45,7 @@
                 android:layout_marginTop="10dip"
                 android:layout_gravity="center_horizontal"
                 android:drawableLeft="@drawable/email"
-                android:text="@string/email_button_text" />
+                android:text="@string/email_address" />
 
             <TextView android:layout_height="0dip"
                 android:layout_width="fill_parent"
